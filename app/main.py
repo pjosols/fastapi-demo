@@ -11,19 +11,21 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates")
 
-DATA_FIELDS = [
-    DataField("name",          "string"),
-    DataField("birth_country", "string"),
-    DataField("year",          "number"),
-    DataField("category",      "string"),
-    DataField("motivation",    "string"),
-    DataField("share",         "number"),
+GEONAMES_FIELDS = [
+    DataField("name",         "string"),
+    DataField("country_code", "keyword"),
+    DataField("feature_code", "keyword"),
+    DataField("admin1_code",  "keyword"),
+    DataField("population",   "number"),
+    DataField("timezone",     "string"),
+    DataField("latitude",     "number"),
+    DataField("longitude",    "number"),
 ]
 
 
 def get_db():
     client = MongoClient(os.environ.get("MONGO_URI", "mongodb://localhost:27017/"))
-    client.db = client["nobel_demo"]
+    client.db = client["geonames_demo"]
     return client
 
 
@@ -32,11 +34,11 @@ async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-@app.post("/api/laureates")
-async def laureates_data(request: Request):
+@app.post("/api/places")
+async def places_data(request: Request):
     try:
         data = await request.json()
-        result = DataTables(get_db(), "laureates", data, data_fields=DATA_FIELDS).get_rows()
+        result = DataTables(get_db(), "places", data, data_fields=GEONAMES_FIELDS).get_rows()
         return JSONResponse(result)
     except Exception as e:
         import traceback
