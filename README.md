@@ -1,7 +1,9 @@
 # mongo-datatables FastAPI Demo
 
+Live demo: [fastapi-demo.net](https://fastapi-demo.net)
+
 A FastAPI app demonstrating server-side DataTables powered by
-[mongo-datatables](https://github.com/pjosols/mongo-datatables), using the
+[mongo-datatables](https://mongo-datatables.net), using the
 [GeoNames](https://www.geonames.org/) dataset (~13M geographic place names).
 
 ## Quickstart
@@ -89,19 +91,6 @@ const headerToKey = {
     'population': 'population',
     'timezone':   'timezone',
 };
-```
-
-That mapping is applied in the `ajax.data` function before the request is sent to the server.
-
-## Search examples
-
-```
-name:york                    →  all places containing "york"
-country:GB                   →  exact match on country_code (indexed)
-feature:PPL                  →  populated places
-country:US feature:MT        →  mountains in the US
-population:>1000000          →  cities over 1 million
-timezone:America             →  all American timezones
 ```
 
 ## License
