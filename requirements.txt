@@ -1,5 +1,5 @@
 fastapi==0.115.0
 uvicorn==0.30.6
 jinja2==3.1.6
-mongo-datatables==2.0.0
+mongo-datatables==2.1.0
 pymongo[srv]==4.11.2
